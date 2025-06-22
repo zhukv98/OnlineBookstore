@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="UTF-8">
+        <title>Online Bookstore!</title>
+
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/popper.min.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/split-grid.js}"></script>
+        <script type="text/javascript" th:inline="javascript" th:src="@{/js/wmks.min.js}"></script>
+
+        <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" type="text/css">
+
+        <link rel="stylesheet" th:href="@{/css/login/all.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/login/bootstrap.min.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/login/bootstrap.bundle.min.js.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/wmks-all.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/split.css}" type="text/css">
+        <link rel="stylesheet" th:href="@{/css/capstone.css}" type="text/css">
+    </head>
+
+    <body>
+
+        <div class="sticky-top" th:switch="${usertype}">
+            <div th:case="'student'">
+                <nav th:replace="~{fragments/studentTopNav :: navbar}"></nav>
+            </div>
+            <div th:case="'instructor'">
+                <nav th:replace="~{fragments/instructorTopNav :: navbar}"></nav>
+            </div>
+        </div>
+
+        <div class="main_grid">
+            <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
+
+            <div class="courses" style="height:100vh; overflow-y:auto; padding:2rem; background-color: #ffffff;">
+                <div class="collapser" style="position: sticky; top: 0; z-index: 10">
+                    <img class="collapser_triangle_image_right no_display"
+                         th:src="@{/images/triangle_right.png}" alt="right triangle image"/>
+                    <img class="collapser_triangle_image_left"
+                         th:src="@{/images/triangle_left.png}" alt="left triangle image"/>
+                </div>
+                <h2 style="display: inline-block; font-size: 3rem;">Types of Books</h2>
+                <div class="course_menu">
+                    <ul>
+                        <li th:each="course : ${listCourse}" th:value="${course.id}"
+                            th:text="${course.name}" class="course" th:classappend="course_ + ${course.id}"
+                            th:onclick="'this.classList.toggle(\'isSelected\');'"></li> 
+        </div>
+
+            <!-- this grid class is from the split library -->
+            <div class="grid" style="height:100vh; margin:0">
+                <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
+
+            <h2 style="display: inline-block; font-size: 3rem;">Products</h2>
+            <div class="course_vms no_display" th:classappend="course_ + ${course.id} + '_vms'"
+                 th:each="course : ${listCourse}" th:value="${course.id}">
+                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
+                    <option th:each="vm : ${course.publicVms}" th:value="${vm.id}"
+                            th:text="${vm.name}"></option>
+                </select>
+                <div style="height:inherit;overflow-y:auto">
+                    <div class="no_display" style="height:inherit; position: relative;"
+                         th:each="vm : ${course.publicVms}" th:classappend="vm_ + ${vm.id}">
+                        <h2 class="vm_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem"
+                            th:text="${vm.name}"></h2>
+                        <img th:src="@{${'/photos/'+vm.image}}" style="width: 75%; object-fit: contain;"/>
+                        </br>
+                        </br>
+                        <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"
+                           th:text="${vm.description}"></p>
+                </div>
+
+            </script>
+        </div>
+
+        <div class="gutter-col gutter-col-1" style="background-color: lightgray;z-index: 5"></div>
+
+        <div style=" height: inherit ;width:100%; padding:2rem; text-align:center; background-color: #ffffff;">
+
+            <div class="course_labs no_display" th:classappend="course_labs_ + ${course.id}"
+                 th:each="course : ${listCourse}" th:value="${course.id}" >
+                <select style="background-color: #78d8fa;" claa
+                        ss="dropdown" id="dropDownList_labs">
+                    <option th:each="lab : ${course.publicLabs}" th:value="${lab.number}"
+                            th:text="'Lab - '+ ${lab.number}"></option>
+                </select>
+                <div style="height:inherit;overflow-y:auto">
+                    <div class="no_display" style="height:inherit; position: relative;"
+                         th:each="lab : ${course.publicLabs}" th:classappend="lab_ + ${lab.number}">
+                        <h2 class="lab_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem"
+                            th:text="${lab.title}"></h2>
+                      
+                        </hr>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            </br>
+                            </br>
+
+                            <iframe class="embed-responsive-item" th:src="@{${'/videos/'+lab.link}}"
+                                    allowfullscreen></iframe>
+                        </div>
+                        <div>
+                            </br>
+                            </br>
+                            <img th:src="@{${'/photos/'+lab.image}}" style="width: 75%; object-fit: contain;"/>
+                            </br>
+                            </br>
+                        </div>
+
+                        <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"
+                           th:text="${lab.description}"></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript" th:inline="javascript">
+        window.onload = (event) => {
+            const webmks = document.querySelector('#mainCanvas');
+            webmks.style.position= "static";
+
+            webmks.setAttribute('style', 'transform:null');
+            webmks.setAttribute('style', 'width:null')
+            webmks.setAttribute('style', 'height:null')
+            webmks.setAttribute('style', 'top:null')
+            webmks.setAttribute('style', 'left:null')
+            webmks.setAttribute('style', 'position:null')
+            webmks.setAttribute('style', 'width:100% !important');
+            webmks.style.top= "null !important";
+            webmks.style.left= "null !important";
+            webmks.style.height= "null !important";
+            webmks.style.width= "100% !important";
+        };
+
+</script>
+
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    let ev  = /*[[${listCourse}]]*/ [];
+    console.log(ev)
+    let ticket = /*[[${ticket}]]*/ "";
+    console.log(ticket);
+    //console VM
+    var wmks = WMKS.createWMKS("wmksContainer",{})
+        .register(WMKS.CONST.Events.CONNECTION_STATE_CHANGE, function(event,data){
+            if(data.state == WMKS.CONST.ConnectionState.CONNECTED){
+                console.log("connection state change : connected");}
+        });
+    wmks.connect(ticket);
+
+    //Split library
+    Split({
+        columnGutters: [{
+            track: 1,
+            element: document.querySelector('.gutter-col-1'),
+        }],
+    })
+
+
+        const labsListsJS = document.querySelectorAll('#dropDownList_labs');
+        let lab_title = null;
+        let lab = null;
+        let chosen = '';
+        let main_grid = document.querySelector('.main_grid');
+        let courses = document.querySelector('.courses');
+        let course_menu = document.querySelector('.course_menu');
+        let collapser = document.querySelector('.collapser');
+        let collapser_triangle_image_right = document.querySelector('.collapser_triangle_image_right');
+        let collapser_triangle_image_left = document.querySelector('.collapser_triangle_image_left');
+
+        let courseLabs = null;
+
+        let selectedCourseVms = null;
+
+        // Courses menu section
+        const course_menu_list = document.querySelectorAll('.course');
+        let selected_course = null;
+
+            window.onload = (event) => {
+                //Determining that first course in list is considered selected (its VMs and Labs should be displayed)
+                if(course_menu_list.length > 0) {
+                    selected_course = course_menu_list.item(0);
+                    selected_course.classList.add('isSelected');
+                    let courseId = selected_course.getAttribute('value')
+                    let selector = '.course_labs_' +  courseId;
+                    courseLabs = document.querySelector(selector);
+                    selector ='.course_' +  courseId + '_vms';
+                    selectedCourseVms = document.querySelector(selector);
+                }
+
+                // Display selected course VMs (the select element)
+                if(selectedCourseVms){
+                    selectedCourseVms.classList.toggle('no_display');
+                }
+
+                // Display selected course Labs
+                if (courseLabs) {
+                    // Display selected course Labs section
+                    courseLabs.classList.toggle('no_display');
+
+                    // Display selected lab description and header
+                    chosen = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
+                    chosen = '.lab_' + chosen;
+                    console.log(chosen);
+                    lab = courseLabs.querySelector(chosen);
+
+                    lab.classList.toggle('no_display');
+                    lab.setAttribute('style', 'height:inherit');
+
+
+                    lab_title = lab.querySelector('.lab_header');
+                    labs = courseLabs.querySelector('select');
+                    lab_title.after(labs);
+                }
+
+
+                // Add a function to each course - to display it's vms and labs
+                course_menu_list.forEach(
+                    function (course, currentIndex, listObj) {
+                        course.onclick = (event) => {
+                            selected_course.classList.toggle('isSelected');
+                            selected_course = course;
+                            selected_course.classList.toggle('isSelected');
+
+                            //update course_labs section
+                            courseLabs.classList.toggle('no_display');
+                            let selector = '.course_labs_' +  course.getAttribute('value');
+                            console.log(selector);
+                            console.log(course);
+                            courseLabs = document.querySelector(selector);
+                            courseLabs.classList.toggle('no_display');
+                            // courseLabs.
+
+                            let chosen_lab = courseLabs.querySelector('select').options[courseLabs.querySelector('select').selectedIndex].value;
+                            chosen_lab = '.lab_' + chosen_lab;
+                            console.log(chosen_lab);
+                            lab = courseLabs.querySelector(chosen_lab);
+
+                            if(lab.classList.contains('no_display')){
+                                lab.classList.toggle('no_display');
+                                lab.setAttribute('style', 'height:inherit');
+                                lab_title = lab.querySelector('.lab_header');
+                                labs = courseLabs.querySelector('select');
+                                lab_title.after(labs);
+                            }
+
+                            selectedCourseVms.classList.toggle('no_display');
+                            selector = '.course_' +  course.getAttribute('value')+ '_vms';
+                            selectedCourseVms = document.querySelector(selector);
+                            selectedCourseVms.classList.toggle('no_display');
+                        }},""
+                );
+            }
+
+
+        labsListsJS.forEach(
+            function (labs, currentIndex, listObj) {
+                labs.onchange = (event) => {
+                    lab.classList.toggle('no_display');
+
+                    chosen = '.lab_' + labs.options[labs.selectedIndex].value;
+                    lab = null;
+                    lab = document.querySelector(chosen);
+
+                    lab.classList.toggle('no_display');
+                    lab.setAttribute('style', 'height:inherit;');
+
+                    lab_title = lab.querySelector('.lab_header')
+                    lab_title.after(labs);
+
+                    labs.setAttribute('style', 'position: relative!important;');
+                    labs.setAttribute('style', 'top: -0.25rem !important;');
+
+                    labs.setAttribute('style', 'background-color: #78d8fa');
+            }},""
+        );
+
+
+            collapser.onclick = (event) => {
+                main_grid.classList.toggle('main_grid');
+                main_grid.classList.toggle('main_grid_collapsed');
+                courses.classList.toggle('courses');
+                courses.classList.toggle('courses_collapsed');
+                course_menu.classList.toggle('no_display');
+                collapser_triangle_image_right.classList.toggle('no_display');
+                collapser_triangle_image_left.classList.toggle('no_display');
+
+            }
+
+    /*]]>*/
+    </script>
+
+</script>
+<div th:replace="~{fragments/footerUI :: footer}"></div>
+</body>
+</html>

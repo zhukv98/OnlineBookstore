@@ -1,0 +1,54 @@
+package com.example.demo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
+import com.example.demo.model.Book;
+import com.example.demo.repository.BookRepository;
+import java.util.ArrayList;
+import java.util.List;
+@Repository("bookDTO")
+@Profile({"dev", "default"})
+public class BookDTO {
+
+    @Autowired
+    BookRepository bookRepository;
+
+    public List<Book> fetchAll() {
+        List<Book> target = new ArrayList<>();
+        bookRepository.findAll().forEach(target::add);
+        return target;
+    }
+    public Book fetch(int bookID) {
+        return bookRepository.findById((long) bookID).orElse(null);
+    }
+    public Book create(int bookID) {
+        Book book = new Book();
+        book.setId(bookID);
+        return bookRepository.save(book);
+    }
+    public Book update(int bookID, Book updatedBook) {
+        Book book = bookRepository.findById((long) bookID).orElse(null);
+        if (book != null) {
+            // Update fields as necessary
+            book.setTitle(updatedBook.getTitle());
+            book.setAuthor(updatedBook.getAuthor());
+            book.setPublishedDate(updatedBook.getPublishedDate());
+            return bookRepository.save(book);
+        }
+        return null;
+    }
+    public Book delete(int bookID) {
+        Book book = bookRepository.findById((long) bookID).orElse(null);
+        if (book != null) {
+            bookRepository.delete(book);
+            return book;
+        }
+        return null;
+    }
+    public List<Book> fetchByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+    public List<Book> fetchByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+}

@@ -1,0 +1,55 @@
+package com.example.demo.service;
+
+import com.example.demo.dao.IAuthorDTO;
+import com.example.demo.model.Author;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class AuthorService implements IAuthorService {
+
+    @Autowired
+    IAuthorDTO authorDTO;
+
+    List<Author> authors;
+
+    public AuthorService(IAuthorDTO authorDTO){
+        this.authorDTO = authorDTO;
+        this.authors = new ArrayList<Author>();
+    }
+    @Override
+    public Author createAuthor(int id) {
+        return authorDTO.create(id);
+    }
+    @Override
+    public Author updateAuthor(int id) {
+        return authorDTO.update(id);
+    }
+    @Override
+    public Author deleteAuthor(int id) {
+        return authorDTO.delete(id);
+    }
+    @Override
+    public Author fetch(int id) {
+        return authorDTO.fetch(id);
+    }
+
+    @Override
+    public List<Author> fetchAll() throws Exception{
+        if(authors.size() == 0){
+            authors = authorDTO.fetchAll();
+        }
+        return authors;
+    }
+    @Override
+    public List<Author> fetchByName(String name) {
+        return authorDTO.fetchByName(name);
+    }
+    @Override
+    public List<Author> fetchByEmail(String email) {
+        return authorDTO.fetchByEmail(email);
+    }
+}

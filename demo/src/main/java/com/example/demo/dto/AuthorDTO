@@ -1,0 +1,54 @@
+package com.example.demo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
+import com.example.demo.model.Author;
+import com.example.demo.repository.AuthorRepository;
+import com.example.demo.interfaces.IAuthorDTO;
+import com.example.demo.interfaces.IAuthorService;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+@Repository("authorDTO")
+@Profile({"dev", "default"})
+public class AuthorDTO {
+
+    @Autowired
+    AuthorRepository authorRepository;
+
+    public List<Author> fetchAll() {
+        List<Author> target = new ArrayList<>();
+        authorRepository.findAll().forEach(target::add);
+        return target;
+    }
+    public Author fetch(int authorID) {
+        return authorRepository.findById((long) authorID).orElse(null);
+    }
+    public Author create(int authorID) {
+        Author author = new Author();
+        author.setId(authorID);
+        return authorRepository.save(author);
+    }
+    public Author update(int authorID) {
+        Author author = authorRepository.findById((long) authorID).orElse(null);
+        if (author != null) {
+            // Update fields as necessary
+            return authorRepository.save(author);
+        }
+        return null;
+    }
+    public Author delete(int authorID) {
+        Author author = authorRepository.findById((long) authorID).orElse(null);
+        if (author != null) {
+            authorRepository.delete(author);
+            return author;
+        }
+        return null;
+    }
+    public List<Author> fetchByName(String name) {
+        return authorRepository.findByName(name);
+    }
+    public List<Author> fetchByEmail(String email) {
+        return authorRepository.findByEmail(email);
+    }
+}

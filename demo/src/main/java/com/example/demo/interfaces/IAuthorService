@@ -1,0 +1,16 @@
+package com.example.demo.interfaces;
+import com.example.demo.model.Author;
+
+import java.util.List;
+
+public interface IAuthorService {
+    Author fetch(int authorID);
+    List<Author> fetchAll() throws Exception;
+    Author createAuthor(int authorID);
+    Author updateAuthor(int authorID);
+    Author deleteAuthor(int authorID);
+    List<Author> fetchByName(String name);
+    List<Author> fetchByEmail(String email);
+    // Additional methods can be added as needed
+    // For example, methods to fetch authors by specific criteria
+}
