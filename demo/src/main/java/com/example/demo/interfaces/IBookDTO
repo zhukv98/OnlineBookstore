@@ -1,0 +1,16 @@
+package com.example.demo.interfaces;
+import com.example.demo.model.Book;
+
+import java.util.List;
+
+public interface IBookDTO {
+    Book fetch(int bookID);
+    List<Book> fetchAll() throws Exception;
+    Book create(int bookID);
+    Book update(int bookID);
+    Book delete(int bookID);
+    List<Book> fetchByTitle(String title);
+    List<Book> fetchByAuthor(String author);
+    // Additional methods can be added as needed
+    // For example, methods to fetch books by specific criteria
+}

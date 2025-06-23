@@ -249,4 +249,35 @@ public class AuthorController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting book: " + e.getMessage());
         }
     }
+    @GetMapping("/author/{id}/books/count")
+    public ResponseEntity<Integer> getBookCountByAuthor(@PathVariable int id) {
+        try {
+            Author author = authorService.fetch(id);
+            if (author != null) {
+                int bookCount = author.getBooks().size();
+                return ResponseEntity.ok(bookCount);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);
+        }
+    }
+    @GetMapping("/author/{id}/books/last-updated")
+    public ResponseEntity<Date> getLastUpdatedDateByAuthor(@PathVariable int id) {
+        try {
+            Author author = authorService.fetch(id);
+            if (author != null) {
+                Date lastUpdated = author.getBooks().stream()
+                        .map(Book::getLastUpdated)
+                        .max(Date::compareTo)
+                        .orElse(null);
+                return ResponseEntity.ok(lastUpdated);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

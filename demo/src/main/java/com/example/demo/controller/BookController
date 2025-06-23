@@ -249,4 +249,37 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ArrayList<>());
         }
     }
+    @GetMapping("/book/{id}/authors/{authorId}/books/{bookId}")
+    public String getBookDetailsByAuthor(@PathVariable int id, @PathVariable int author
+Id, @PathVariable int bookId, Model model) {
+        try {
+            Book book = bookService.fetch(id);
+            if (book != null) {
+                Author author = book.getAuthors().stream()
+                        .filter(a -> a.getId() == authorId)
+                        .findFirst()
+                        .orElse(null);
+                if (author != null) {
+                    Book bookDetails = author.getBooks().stream()
+                            .filter(b -> b.getId() == bookId)
+                            .findFirst()
+                            .orElse(null);
+                    if (bookDetails != null) {
+                        model.addAttribute("book", book);
+                        model.addAttribute("author", author);
+                        model.addAttribute("bookDetails", bookDetails);
+                    } else {
+                        model.addAttribute("error", "Book not found for this author");
+                    }
+                } else {
+                    model.addAttribute("error", "Author not found");
+                }
+            } else {
+                model.addAttribute("error", "Book not found");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Unable to fetch book details by author: " + e.getMessage());
+        }
+        return "bookDetailsByAuthor";
+    }
 }

@@ -43,11 +43,13 @@
                          th:src="@{/images/triangle_left.png}" alt="left triangle image"/>
                 </div>
                 <h2 style="display: inline-block; font-size: 3rem;">Types of Books</h2>
-                <div class="course_menu">
+                <div class="book_menu">
                     <ul>
-                        <li th:each="course : ${listCourse}" th:value="${course.id}"
-                            th:text="${course.name}" class="course" th:classappend="course_ + ${course.id}"
-                            th:onclick="'this.classList.toggle(\'isSelected\');'"></li> 
+                        <li th:each="book : ${listCourse}" th:value="${book.id}"
+                            th:classappend="${course.id} + ' course'">
+                            <a href="#" th:text="${course.name}" th:attr="value=${course.id}"></a>
+                        </li>
+                    </ul>
         </div>
 
             <!-- this grid class is from the split library -->
@@ -55,23 +57,13 @@
                 <div id="wmksContainer" style="width:100%; padding:2rem; text-align:center; background-color: #ffffff; transform: scale(1);">
 
             <h2 style="display: inline-block; font-size: 3rem;">Products</h2>
-            <div class="course_vms no_display" th:classappend="course_ + ${course.id} + '_vms'"
-                 th:each="course : ${listCourse}" th:value="${course.id}">
-                <select style="background-color: #78d8fa;" class="dropdown" id="dropDownList_vms">
-                    <option th:each="vm : ${course.publicVms}" th:value="${vm.id}"
-                            th:text="${vm.name}"></option>
-                </select>
-                <div style="height:inherit;overflow-y:auto">
-                    <div class="no_display" style="height:inherit; position: relative;"
-                         th:each="vm : ${course.publicVms}" th:classappend="vm_ + ${vm.id}">
-                        <h2 class="vm_header" style="display: inline-block; font-size: 3rem; margin-right: 1rem"
-                            th:text="${vm.name}"></h2>
-                        <img th:src="@{${'/photos/'+vm.image}}" style="width: 75%; object-fit: contain;"/>
-                        </br>
-                        </br>
-                        <p style="font-size: 1.5rem; max-height:inherit;padding-right: .5rem;"
-                           th:text="${vm.description}"></p>
-                </div>
+            <div class="course_menu no_display">
+                <ul>
+                    <li th:each="course : ${listCourse}" th:value="${course.id}"
+                        th:classappend="${course.id} + ' course'">
+                        <a href="#" th:text="${course.name}" th:attr="value=${course.id}"></a>
+                    </li>
+                </ul>
 
             </script>
         </div>
