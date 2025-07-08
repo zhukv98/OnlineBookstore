@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<div th:insert="fragments/headerUI :: header"></div>
+	<div th:insert="~{fragments/headerUI :: header}"></div>
 	<br>
 	<br>
 	<br>
@@ -61,6 +61,6 @@
 			</div>
 		</div>
 	</div>
-	<div th:insert="fragments/footerUI :: footer"></div>
+	<div th:insert="~{fragments/footerUI :: footer}"></div>
 </body>
 </html>

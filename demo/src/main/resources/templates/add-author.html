@@ -29,7 +29,7 @@
 </head>
 
 <body>
-<div th:insert="fragments/headerUI :: header"></div>
+<div th:insert="~{fragments/headerUI :: header}"></div>
 <div class="container my-5">
     <h3>Add Authors</h3>
     <div class="card-body">
@@ -56,7 +56,7 @@
         </div>
     </div>
 </div>
-<div th:insert="fragments/footerUI :: footer"></div>
+<div th:insert="~{fragments/footerUI :: footer}"></div>
 </body>
 
 </html>
