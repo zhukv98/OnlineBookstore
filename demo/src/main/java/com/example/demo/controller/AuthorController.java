@@ -1,15 +1,14 @@
 package com.example.demo.controller;
-import com.example.demo.entity.Author;
-import com.example.demo.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.demo.entity.Author;
+import com.example.demo.service.AuthorService;
 
 @Controller
 public class AuthorController {
@@ -22,25 +21,13 @@ public class AuthorController {
 	}
 
 	@RequestMapping("/authors")
-	public String findAllAuthors(Model model, @RequestParam Optional<Integer> page,
-			@RequestParam Optional<Integer> size) {
-
-		var currentPage = page.orElse(1);
-		var pageSize = size.orElse(5);
-		var bookPage = authorService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-
-		model.addAttribute("authors", bookPage);
-
-		int totalPages = bookPage.getTotalPages();
-		if (totalPages > 0) {
-			var pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+	public String findAllAuthors(Model model) {
+		model.addAttribute("authors", authorService.findAllAuthors());
 		return "list-authors";
 	}
 
 	@RequestMapping("/author/{id}")
-	public String findAuthorById(@PathVariable Long id, Model model) {
+	public String findAuthorById(@PathVariable("id") Long id, Model model) {
 
 		model.addAttribute("author", authorService.findAuthorById(id));
 		return "list-author";
@@ -63,14 +50,14 @@ public class AuthorController {
 	}
 
 	@GetMapping("/updateAuthor/{id}")
-	public String showUpdateForm(@PathVariable Long id, Model model) {
+	public String showUpdateForm(@PathVariable("id") Long id, Model model) {
 
 		model.addAttribute("author", authorService.findAuthorById(id));
 		return "update-author";
 	}
 
 	@RequestMapping("/update-author/{id}")
-	public String updateAuthor(@PathVariable Long id, Author author, BindingResult result, Model model) {
+	public String updateAuthor(@PathVariable("id") Long id, Author author, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			author.setId(id);
 			return "update-author";
@@ -82,7 +69,7 @@ public class AuthorController {
 	}
 
 	@RequestMapping("/remove-author/{id}")
-	public String deleteAuthor(@PathVariable Long id, Model model) {
+	public String deleteAuthor(@PathVariable("id") Long id, Model model) {
 		authorService.deleteAuthor(id);
 
 		model.addAttribute("author", authorService.findAllAuthors());

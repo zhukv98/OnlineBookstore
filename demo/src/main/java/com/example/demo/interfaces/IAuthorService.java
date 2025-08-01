@@ -1,9 +1,6 @@
 package com.example.demo.interfaces;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.example.demo.entity.Author;
 
 public interface IAuthorService {
@@ -17,6 +14,4 @@ public interface IAuthorService {
 	public void updateAuthor(Author author);
 
 	public void deleteAuthor(Long id);
-
-    public Page<Author> findPaginated(Pageable pageable);
 }

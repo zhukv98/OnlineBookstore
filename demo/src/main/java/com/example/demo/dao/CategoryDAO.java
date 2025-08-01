@@ -18,10 +18,6 @@ public class CategoryDAO implements ICategoryDAO {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	public CategoryDAO(CategoryRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
-	}
-
 	@Override
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Category> findAllCategories() {

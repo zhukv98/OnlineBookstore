@@ -1,12 +1,7 @@
 package com.example.demo.service;
 import java.util.List;
-import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Book;
@@ -54,35 +49,5 @@ public class BookService implements IBookService {
         // TODO: Implement this method
         return bookDAO.findAllBooks();
     }
-    
-    @Override
-    public Page<Book> findPaginated(Pageable pageable) {
-        long startTime = System.currentTimeMillis(); // 开始计时
 
-        List<Book> allBooks;
-        try {
-            allBooks = findAllBooks();
-        } catch (Exception e) {
-            e.printStackTrace();
-            allBooks = Collections.emptyList();
-        }
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        List<Book> list;
-
-        if (allBooks.size() < startItem) {
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, allBooks.size());
-            list = allBooks.subList(startItem, toIndex);
-        }
-
-        var bookPage = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), allBooks.size());
-
-        long endTime = System.currentTimeMillis(); // 结束计时
-        System.out.println("Optimized method execution time: " + (endTime - startTime) + "ms");
-
-        return bookPage;
-    }
 }

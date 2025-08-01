@@ -7,10 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.entity.Author;
 import com.example.demo.entity.Book;
@@ -20,7 +22,6 @@ import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
-
 @Configuration
 @EnableJpaRepositories
 @EntityScan("com.example.demo")
@@ -38,7 +39,10 @@ public class DemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
-
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
 	@Bean
 	public CommandLineRunner initialCreate() {
 		return (args) -> {

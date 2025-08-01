@@ -46,12 +46,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<div th:if="${authors.totalPages > 0}" class="pagination"
-						th:each="pageNumber : ${pageNumbers}">
-						<a th:href="@{/authors(size=${authors.size}, page=${pageNumber})}"
-							th:text=${pageNumber}
-							th:class="${pageNumber==authors.number + 1} ? active"></a>
-					</div>
+					
 				</div>
 			</div>
 		</div>

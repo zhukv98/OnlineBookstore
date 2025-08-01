@@ -18,10 +18,6 @@ public class PublisherDAO implements IPublisherDAO {
     @Autowired
 	private PublisherRepository publisherRepository;
 
-	public PublisherDAO(PublisherRepository publisherRepository) {
-		this.publisherRepository = publisherRepository;
-	}
-
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Publisher> findAllPublishers() {

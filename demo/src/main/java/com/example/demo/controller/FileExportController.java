@@ -1,19 +1,20 @@
 package com.example.demo.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.example.demo.interfaces.IFileService;
+import com.example.demo.service.FileService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class FileExportController {
+	@Autowired
+	private final FileService fileService;
 
-	private final IFileService fileService;
-
-	public FileExportController(IFileService fileService) {
+	public FileExportController(FileService fileService) {
 		this.fileService = fileService;
 	}
 

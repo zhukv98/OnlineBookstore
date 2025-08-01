@@ -1,9 +1,6 @@
 package com.example.demo.interfaces;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.example.demo.entity.Book;
 
 public interface IBookService {
@@ -19,6 +16,4 @@ public interface IBookService {
 	public void updateBook(Book book);
 
 	public void deleteBook(Long id);
-
-    public Page<Book> findPaginated(Pageable pageable);
 }

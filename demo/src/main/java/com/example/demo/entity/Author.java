@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @DynamicUpdate
-@Table(name = "Authors")
+@Table(name = "authors")
 public class Author{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

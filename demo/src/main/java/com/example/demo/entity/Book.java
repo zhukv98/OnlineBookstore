@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 @Entity
 @DynamicUpdate
-@Table(name = "Books")
+@Table(name = "books")
 public class Book{
 
 	@Id
